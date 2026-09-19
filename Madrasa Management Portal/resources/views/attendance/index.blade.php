@@ -20,18 +20,20 @@
                 </select>
             </form>
 
-            <form method="POST" action="/attendance">
-                @csrf
-                <input type="hidden" name="subject_id" value="{{ $selectedSubjectId }}">
-                <div class="row g-2">
-                    <div class="col-md-8">
-                        <input class="form-control form-control-lg" name="admission_number" placeholder="Scan or type admission number" autofocus>
+            @if (auth()->user()->role === 'teacher')
+                <form method="POST" action="/attendance">
+                    @csrf
+                    <input type="hidden" name="subject_id" value="{{ $selectedSubjectId }}">
+                    <div class="row g-2">
+                        <div class="col-md-8">
+                            <input class="form-control form-control-lg" name="admission_number" placeholder="Scan or type admission number" autofocus>
+                        </div>
+                        <div class="col-md-4">
+                            <button class="btn btn-primary btn-lg w-100">Check In</button>
+                        </div>
                     </div>
-                    <div class="col-md-4">
-                        <button class="btn btn-primary btn-lg w-100">Check In</button>
-                    </div>
-                </div>
-            </form>
+                </form>
+            @endif
         </div>
     </div>
 

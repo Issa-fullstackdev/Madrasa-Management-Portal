@@ -2,31 +2,33 @@
 @section('content')
     <h3 class="mb-3">Students</h3>
 
-    <div class="card mb-4">
-        <div class="card-body">
-            <h5 class="card-title">Register New Student</h5>
-            <form method="POST" action="/students">
-                @csrf
-                <div class="row g-2">
-                    <div class="col-md-3"><input class="form-control" name="first_name" placeholder="First name" required></div>
-                    <div class="col-md-3"><input class="form-control" name="last_name" placeholder="Last name" required></div>
-                    <div class="col-md-3"><input class="form-control" name="guardian_name" placeholder="Guardian name" required></div>
-                    <div class="col-md-3"><input class="form-control" name="guardian_phone" placeholder="Guardian phone" required></div>
-                    <div class="col-md-3 mt-2">
-                        <select class="form-control" name="subject_id" required>
-                            <option value="">Select subject/class</option>
-                            @foreach ($subjects as $subject)
-                                <option value="{{ $subject->id }}">{{ $subject->name }}</option>
-                            @endforeach
-                        </select>
+    @if (auth()->user()->role === 'teacher')
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title">Register New Student</h5>
+                <form method="POST" action="/students">
+                    @csrf
+                    <div class="row g-2">
+                        <div class="col-md-3"><input class="form-control" name="first_name" placeholder="First name" required></div>
+                        <div class="col-md-3"><input class="form-control" name="last_name" placeholder="Last name" required></div>
+                        <div class="col-md-3"><input class="form-control" name="guardian_name" placeholder="Guardian name" required></div>
+                        <div class="col-md-3"><input class="form-control" name="guardian_phone" placeholder="Guardian phone" required></div>
+                        <div class="col-md-3 mt-2">
+                            <select class="form-control" name="subject_id" required>
+                                <option value="">Select subject/class</option>
+                                @foreach ($subjects as $subject)
+                                    <option value="{{ $subject->id }}">{{ $subject->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-md-3 mt-2">
+                            <button class="btn btn-primary w-100">Enroll Student</button>
+                        </div>
                     </div>
-                    <div class="col-md-3 mt-2">
-                        <button class="btn btn-primary w-100">Enroll Student</button>
-                    </div>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
-    </div>
+    @endif
 
     <table class="table table-bordered bg-white">
         <thead class="table-dark">
