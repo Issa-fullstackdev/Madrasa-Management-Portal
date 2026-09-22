@@ -19,12 +19,14 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/subjects', [SubjectController::class, 'index']);
 
-    Route::get('/students', [StudentController::class, 'index']);
-    Route::post('/students', [StudentController::class, 'store'])->middleware('role:teacher');
-
     Route::get('/attendance', [AttendanceController::class, 'index']);
     Route::post('/attendance', [AttendanceController::class, 'store'])->middleware('role:teacher');
 
-    Route::get('/payments', [PaymentController::class, 'index']);
-    Route::post('/payments', [PaymentController::class, 'store'])->middleware('role:teacher');
+    Route::middleware('role:principal')->group(function () {
+        Route::get('/students', [StudentController::class, 'index']);
+        Route::post('/students', [StudentController::class, 'store']);
+
+        Route::get('/payments', [PaymentController::class, 'index']);
+        Route::post('/payments', [PaymentController::class, 'store']);
+    });
 });

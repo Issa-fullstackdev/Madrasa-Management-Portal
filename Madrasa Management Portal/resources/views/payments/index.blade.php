@@ -22,36 +22,34 @@
         <input type="month" class="form-control" name="month" value="{{ $month }}" onchange="this.form.submit()">
     </form>
 
-    @if (auth()->user()->role === 'teacher')
-        <div class="card mb-4">
-            <div class="card-body">
-                <h5 class="card-title">Record Payment</h5>
-                <form method="POST" action="/payments">
-                    @csrf
-                    <input type="hidden" name="month" value="{{ $month }}">
-                    <div class="row g-2">
-                        <div class="col-md-4">
-                            <select class="form-control" name="student_id" required>
-                                <option value="">Select student</option>
-                                @foreach ($students as $student)
-                                    <option value="{{ $student->id }}">{{ $student->admission_number }} — {{ $student->first_name }} {{ $student->last_name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="col-md-3">
-                            <input class="form-control" type="number" name="amount" value="10000" required>
-                        </div>
-                        <div class="col-md-3">
-                            <input class="form-control" name="paybill_reference" placeholder="M-Pesa transaction code">
-                        </div>
-                        <div class="col-md-2">
-                            <button class="btn btn-primary w-100">Mark Paid</button>
-                        </div>
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5 class="card-title">Record Payment</h5>
+            <form method="POST" action="/payments">
+                @csrf
+                <input type="hidden" name="month" value="{{ $month }}">
+                <div class="row g-2">
+                    <div class="col-md-4">
+                        <select class="form-control" name="student_id" required>
+                            <option value="">Select student</option>
+                            @foreach ($students as $student)
+                                <option value="{{ $student->id }}">{{ $student->admission_number }} — {{ $student->first_name }} {{ $student->last_name }}</option>
+                            @endforeach
+                        </select>
                     </div>
-                </form>
-            </div>
+                    <div class="col-md-3">
+                        <input class="form-control" type="number" name="amount" value="10000" required>
+                    </div>
+                    <div class="col-md-3">
+                        <input class="form-control" name="paybill_reference" placeholder="M-Pesa transaction code">
+                    </div>
+                    <div class="col-md-2">
+                        <button class="btn btn-primary w-100">Mark Paid</button>
+                    </div>
+                </div>
+            </form>
         </div>
-    @endif
+    </div>
 
     <table class="table table-bordered bg-white">
         <thead class="table-dark">
