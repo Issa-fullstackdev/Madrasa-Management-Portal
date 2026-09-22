@@ -12,6 +12,7 @@
             <a class="nav-link text-white" href="/subjects">Subjects</a>
             <a class="nav-link text-white" href="/students">Students</a>
             <a class="nav-link text-white" href="/attendance">Attendance</a>
+            <a class="nav-link text-white" href="/payments">Payments</a>
         </div>
         @auth
             <span class="navbar-text text-white me-3">
