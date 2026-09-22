@@ -4,18 +4,28 @@
     <meta charset="utf-8">
     <title>Login — Madrasa Management Portal</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <link href="/css/theme.css" rel="stylesheet">
 </head>
-<body class="bg-light">
-    <div class="container mt-5" style="max-width: 400px;">
-        <h3 class="mb-4 text-center">Madrasa Management Portal</h3>
+<body class="mosque-auth-bg geo-pattern">
+    <div class="container" style="max-width: 400px;">
+        <div class="mosque-arch">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2a7 7 0 1 0 5.6 11.2A8 8 0 1 1 12 2z"/>
+                <path d="M18.5 5.5l.7 1.6 1.6.7-1.6.7-.7 1.6-.7-1.6-1.6-.7 1.6-.7z"/>
+            </svg>
+        </div>
 
-        @if ($errors->any())
-            <div class="alert alert-danger">{{ $errors->first() }}</div>
-        @endif
-
-        <div class="card">
+        <div class="card auth-card text-center">
             <div class="card-body">
-                <form method="POST" action="/login">
+                <div class="auth-subtitle mb-1">Darul Arqam Islamic Centre</div>
+                <h3 class="mb-4">Madrasa Management Portal</h3>
+
+                @if ($errors->any())
+                    <div class="alert alert-danger text-start">{{ $errors->first() }}</div>
+                @endif
+
+                <form method="POST" action="/login" class="text-start">
                     @csrf
                     <div class="mb-3">
                         <label class="form-label">Email</label>

@@ -4,10 +4,19 @@
     <meta charset="utf-8">
     <title>Madrasa Management Portal</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <link href="/css/theme.css" rel="stylesheet">
 </head>
-<body class="bg-light">
+<body class="geo-pattern">
+    <div class="mosque-border-strip"></div>
     <nav class="navbar navbar-expand navbar-dark bg-dark px-3">
-        <span class="navbar-brand">Madrasa Management Portal</span>
+        <span class="navbar-brand">
+            <svg class="brand-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path fill="#fff" d="M12 2a7 7 0 1 0 5.6 11.2A8 8 0 1 1 12 2z"/>
+                <path fill="#fff" d="M18.5 5.5l.7 1.6 1.6.7-1.6.7-.7 1.6-.7-1.6-1.6-.7 1.6-.7z"/>
+            </svg>
+            Madrasa Management Portal
+        </span>
         <div class="navbar-nav me-auto">
             <a class="nav-link text-white" href="/subjects">Subjects</a>
             <a class="nav-link text-white" href="/attendance">Attendance</a>
@@ -26,8 +35,9 @@
             </form>
         @endauth
     </nav>
-    <div class="container mt-4">
+    <div class="container mt-4 mb-5">
         @yield('content')
     </div>
+    <div class="mosque-border-strip"></div>
 </body>
 </html>
