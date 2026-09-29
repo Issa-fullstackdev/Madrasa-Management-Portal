@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Student;
+use App\Models\Subject;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -9,7 +12,11 @@ class AuthController extends Controller
 {
     public function showLogin()
     {
-        return view('auth.login');
+        return view('auth.login', [
+            'totalStudents' => Student::where('status', 'active')->count(),
+            'totalTeachers' => User::where('role', 'teacher')->count(),
+            'totalSubjects' => Subject::count(),
+        ]);
     }
 
     public function login(Request $request)
