@@ -318,7 +318,9 @@ h1, h2, h3, h4, h5, h6, .navbar-brand {
     position: relative;
     flex: 0 0 50%;
     width: 50%;
-    background-size: cover;
+    background-color: var(--mosque-blue-dark);
+    background-size: contain;
+    background-repeat: no-repeat;
     background-position: center;
     min-height: 100vh;
     color: #fff;
