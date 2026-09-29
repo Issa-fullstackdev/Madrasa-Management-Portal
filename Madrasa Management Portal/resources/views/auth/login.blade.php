@@ -42,7 +42,7 @@
             </div>
         </div>
 
-        <div class="auth-image-panel d-none d-lg-flex" style="background-image: url('/images/darul-arqam-building.jpg');">
+        <div class="auth-image-panel d-none d-lg-flex" style="background-image: url('/images/darul-arqam-building.webp');">
             <h2>Darul Arqam Islamic Centre</h2>
             <p>Managing admissions, attendance, and Quran &amp; Hifdh progress for our students, all in one place.</p>
             <div class="auth-stats">
