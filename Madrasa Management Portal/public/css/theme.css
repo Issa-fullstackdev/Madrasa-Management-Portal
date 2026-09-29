@@ -50,30 +50,21 @@ h1, h2, h3, h4, h5, h6, .navbar-brand {
     );
 }
 
-/* Navbar */
-.navbar.bg-dark {
-    background: linear-gradient(120deg, var(--mosque-blue-dark), var(--mosque-green-dark)) !important;
-}
-
+/* Brand */
 .navbar-brand {
-    color: #fff !important;
     display: flex;
     align-items: center;
     gap: .5rem;
     letter-spacing: .02em;
 }
 
+.app-sidebar-theme .navbar-brand {
+    color: #fff !important;
+}
+
 .navbar-brand .brand-icon {
     width: 26px;
     height: 26px;
-}
-
-.navbar .nav-link {
-    position: relative;
-}
-
-.navbar .nav-link:hover {
-    color: #cfeee0 !important;
 }
 
 /* Cards get a tile-inspired top accent */
@@ -141,6 +132,124 @@ h1, h2, h3, h4, h5, h6, .navbar-brand {
 .form-check-input:focus {
     border-color: var(--mosque-blue);
     box-shadow: 0 0 0 .25rem rgba(14, 82, 102, .2);
+}
+
+/* Sidebar layout */
+.app-shell {
+    min-height: 100vh;
+}
+
+.app-sidebar {
+    width: 240px;
+    flex-shrink: 0;
+}
+
+.app-sidebar-theme {
+    background: linear-gradient(180deg, var(--mosque-blue-dark), var(--mosque-green-dark));
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    padding: 1.25rem 1rem;
+    width: 100%;
+}
+
+.app-sidebar-theme .navbar-brand {
+    color: #fff !important;
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+}
+
+.app-sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: .25rem;
+    flex: 1;
+}
+
+.app-sidebar-nav .nav-link {
+    color: rgba(255, 255, 255, .8);
+    border-radius: .5rem;
+    padding: .55rem .75rem;
+    font-weight: 500;
+}
+
+.app-sidebar-nav .nav-link:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, .08);
+}
+
+.app-sidebar-nav .nav-link.active {
+    color: var(--mosque-blue-dark);
+    background: #fff;
+}
+
+.app-sidebar-footer {
+    border-top: 1px solid rgba(255, 255, 255, .15);
+    padding-top: 1rem;
+    margin-top: 1rem;
+}
+
+.app-sidebar-footer .badge {
+    background-color: rgba(255, 255, 255, .18) !important;
+}
+
+.app-main {
+    flex: 1;
+    min-width: 0;
+}
+
+.app-sidebar-offcanvas {
+    width: 240px;
+}
+
+.app-topbar .navbar-brand {
+    font-size: 1rem;
+}
+
+/* KPI stat cards */
+.kpi-card {
+    display: flex;
+    align-items: center;
+    gap: .9rem;
+}
+
+.kpi-icon {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    flex-shrink: 0;
+    color: #fff;
+}
+
+.kpi-value {
+    font-family: 'Amiri', 'Georgia', serif;
+    font-size: 1.6rem;
+    line-height: 1;
+    color: var(--mosque-blue-dark);
+}
+
+.kpi-label {
+    color: #5a6b6e;
+    font-size: .85rem;
+}
+
+.chart-card canvas {
+    max-height: 260px;
+}
+
+.activity-item {
+    display: flex;
+    justify-content: space-between;
+    padding: .5rem 0;
+    border-bottom: 1px solid rgba(14, 82, 102, .1);
+}
+
+.activity-item:last-child {
+    border-bottom: none;
 }
 
 /* Login page */

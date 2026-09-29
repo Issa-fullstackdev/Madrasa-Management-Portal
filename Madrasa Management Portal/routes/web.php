@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\AttendanceController;
@@ -13,9 +14,7 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::middleware('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
 
-    Route::get('/', function () {
-        return redirect('/students');
-    });
+    Route::get('/', [DashboardController::class, 'index']);
 
     Route::get('/subjects', [SubjectController::class, 'index']);
 
