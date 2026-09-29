@@ -8,9 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
     <link href="/css/theme.css" rel="stylesheet">
 </head>
-<body class="geo-pattern">
-    <div class="mosque-border-strip"></div>
-
+<body>
     <div class="app-shell d-flex">
         <aside class="app-sidebar d-none d-lg-flex">
             <div class="app-sidebar-theme">
@@ -35,8 +33,6 @@
             </div>
         </div>
     </div>
-
-    <div class="mosque-border-strip"></div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>

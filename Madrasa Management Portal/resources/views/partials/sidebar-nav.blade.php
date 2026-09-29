@@ -1,8 +1,5 @@
 <span class="navbar-brand">
-    <svg class="brand-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <path fill="#fff" d="M12 2a7 7 0 1 0 5.6 11.2A8 8 0 1 1 12 2z"/>
-        <path fill="#fff" d="M18.5 5.5l.7 1.6 1.6.7-1.6.7-.7 1.6-.7-1.6-1.6-.7 1.6-.7z"/>
-    </svg>
+    <img class="brand-icon" src="/images/darul-arqam-logo.png" alt="Darul Arqam">
     Madrasa Portal
 </span>
 

@@ -16,7 +16,7 @@
     --bs-secondary-rgb: 63, 107, 94;
     --bs-dark: var(--mosque-blue-dark);
     --bs-dark-rgb: 7, 56, 68;
-    --bs-body-bg: var(--mosque-cream);
+    --bs-body-bg: #f6f8f8;
     --bs-body-color: var(--mosque-ink);
     --bs-border-radius: .6rem;
     --bs-border-radius-lg: .9rem;
@@ -33,23 +33,6 @@ h1, h2, h3, h4, h5, h6, .navbar-brand {
     color: var(--mosque-blue-dark);
 }
 
-/* Geometric star pattern, used as a subtle watermark */
-.geo-pattern {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Cpath d='M20 2 L26 14 L38 20 L26 26 L20 38 L14 26 L2 20 L14 14 Z' fill='none' stroke='%230e5266' stroke-width='1' opacity='0.35'/%3E%3C/svg%3E");
-    background-repeat: repeat;
-}
-
-/* Tri-tone decorative border strip, echoes tile-work borders */
-.mosque-border-strip {
-    height: 8px;
-    background: repeating-linear-gradient(
-        45deg,
-        var(--mosque-blue) 0, var(--mosque-blue) 10px,
-        var(--mosque-green) 10px, var(--mosque-green) 20px,
-        var(--mosque-cream) 20px, var(--mosque-cream) 22px
-    );
-}
-
 /* Brand */
 .navbar-brand {
     display: flex;
@@ -63,8 +46,10 @@ h1, h2, h3, h4, h5, h6, .navbar-brand {
 }
 
 .navbar-brand .brand-icon {
-    width: 26px;
-    height: 26px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
 }
 
 /* Cards get a tile-inspired top accent */
@@ -257,39 +242,54 @@ h1, h2, h3, h4, h5, h6, .navbar-brand {
     min-height: 100vh;
     background: linear-gradient(135deg, var(--mosque-blue-dark), var(--mosque-blue) 45%, var(--mosque-green-dark));
     display: flex;
+    flex-direction: column;
     align-items: center;
+    justify-content: center;
     padding: 2rem 1rem;
 }
 
-.mosque-arch {
-    width: 84px;
-    height: 84px;
-    margin: -66px auto 1rem;
-    background: linear-gradient(135deg, var(--mosque-blue), var(--mosque-green));
-    border-radius: 50% 50% 4px 4px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 4px 14px rgba(7, 56, 68, .35);
-    position: relative;
-    z-index: 1;
+.auth-intro {
+    text-align: center;
+    margin-bottom: 1.75rem;
+    opacity: 0;
+    animation: auth-pop .7s cubic-bezier(.2, .9, .3, 1.3) forwards;
 }
 
-.mosque-arch svg {
-    width: 42px;
-    height: 42px;
-    fill: #fff;
+.auth-intro img {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, .35);
+    margin-bottom: 1rem;
+}
+
+.auth-intro h1 {
+    color: #fff;
+    font-size: 1.9rem;
+    margin: 0;
+}
+
+.auth-intro .auth-intro-sub {
+    color: rgba(255, 255, 255, .8);
+    font-size: .85rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
 }
 
 .auth-card {
-    padding-top: 3.5rem;
-    overflow: visible;
-    position: relative;
+    opacity: 0;
+    animation: auth-fade-up .6s ease-out .45s forwards;
+    width: 100%;
+    max-width: 380px;
 }
 
-.auth-subtitle {
-    color: var(--mosque-green-dark);
-    font-size: .85rem;
-    letter-spacing: .08em;
-    text-transform: uppercase;
+@keyframes auth-pop {
+    0% { opacity: 0; transform: scale(.55); }
+    70% { opacity: 1; transform: scale(1.05); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes auth-fade-up {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
 }
