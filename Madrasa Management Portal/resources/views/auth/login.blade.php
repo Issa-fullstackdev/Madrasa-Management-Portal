@@ -9,7 +9,7 @@
 </head>
 <body class="mosque-auth-bg">
     <div class="auth-intro">
-        <img src="/images/darul-arqam-logo.png" alt="Darul Arqam Islamic Centre">
+        <img src="/images/darul-arqam-logo.jpg" alt="Darul Arqam Islamic Centre">
         <h1>Darul Arqam Madrasa</h1>
         <div class="auth-intro-sub">Management Portal</div>
     </div>

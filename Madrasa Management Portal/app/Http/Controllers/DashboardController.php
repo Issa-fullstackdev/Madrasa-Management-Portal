@@ -26,6 +26,11 @@ class DashboardController extends Controller
 
         $recentActivity = Attendance::with('student', 'subject')->latest('id')->take(5)->get();
 
+        $studentProgress = Student::where('status', 'active')
+            ->with('subjects')
+            ->orderBy('first_name')
+            ->get();
+
         $paymentsThisMonth = null;
         if ($request->user()->role === 'principal') {
             $month = now()->format('Y-m');
@@ -43,6 +48,7 @@ class DashboardController extends Controller
             'trend' => $trend,
             'recentActivity' => $recentActivity,
             'paymentsThisMonth' => $paymentsThisMonth,
+            'studentProgress' => $studentProgress,
         ]);
     }
 }

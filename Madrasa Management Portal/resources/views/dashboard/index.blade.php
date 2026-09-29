@@ -77,6 +77,55 @@
         </div>
     </div>
 
+    <div class="card mt-3">
+        <div class="card-body">
+            <h5 class="card-title">Student Progress — Juz Completed (out of 30)</h5>
+            <table class="table table-bordered bg-white mb-0">
+                <thead class="table-dark">
+                    <tr><th>Adm. No.</th><th>Name</th><th>Quran</th><th>Hifdh</th></tr>
+                </thead>
+                <tbody>
+                    @forelse ($studentProgress as $student)
+                        @php
+                            $quran = $student->subjects->firstWhere('name', 'Quran');
+                            $hifdh = $student->subjects->firstWhere('name', 'Hifdh');
+                        @endphp
+                        <tr>
+                            <td>{{ $student->admission_number }}</td>
+                            <td>{{ $student->first_name }} {{ $student->last_name }}</td>
+                            <td style="min-width: 160px;">
+                                @if ($quran)
+                                    <div class="d-flex align-items-center gap-2">
+                                        <div class="progress flex-grow-1" style="height: 8px;">
+                                            <div class="progress-bar" style="width: {{ $quran->pivot->juz_completed / 30 * 100 }}%; background: var(--mosque-blue);"></div>
+                                        </div>
+                                        <span class="small text-muted">{{ $quran->pivot->juz_completed }}/30</span>
+                                    </div>
+                                @else
+                                    <span class="text-muted">—</span>
+                                @endif
+                            </td>
+                            <td style="min-width: 160px;">
+                                @if ($hifdh)
+                                    <div class="d-flex align-items-center gap-2">
+                                        <div class="progress flex-grow-1" style="height: 8px;">
+                                            <div class="progress-bar" style="width: {{ $hifdh->pivot->juz_completed / 30 * 100 }}%; background: var(--mosque-green);"></div>
+                                        </div>
+                                        <span class="small text-muted">{{ $hifdh->pivot->juz_completed }}/30</span>
+                                    </div>
+                                @else
+                                    <span class="text-muted">—</span>
+                                @endif
+                            </td>
+                        </tr>
+                    @empty
+                        <tr><td colspan="4" class="text-muted text-center">No students enrolled yet.</td></tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
     <script>
         new Chart(document.getElementById('attendanceTrendChart'), {

@@ -46,10 +46,12 @@ h1, h2, h3, h4, h5, h6, .navbar-brand {
 }
 
 .navbar-brand .brand-icon {
-    width: 30px;
-    height: 30px;
+    width: 42px;
+    height: 42px;
     border-radius: 50%;
     object-fit: cover;
+    background: #fff;
+    flex-shrink: 0;
 }
 
 /* Cards get a tile-inspired top accent */
@@ -256,10 +258,11 @@ h1, h2, h3, h4, h5, h6, .navbar-brand {
 }
 
 .auth-intro img {
-    width: 110px;
-    height: 110px;
+    width: 160px;
+    height: 160px;
     border-radius: 50%;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, .35);
+    background: #fff;
+    box-shadow: 0 10px 28px rgba(0, 0, 0, .3);
     margin-bottom: 1rem;
 }
 

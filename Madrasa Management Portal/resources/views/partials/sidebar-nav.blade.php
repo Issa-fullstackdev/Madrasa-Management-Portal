@@ -1,5 +1,5 @@
 <span class="navbar-brand">
-    <img class="brand-icon" src="/images/darul-arqam-logo.png" alt="Darul Arqam">
+    <img class="brand-icon" src="/images/darul-arqam-logo.jpg" alt="Darul Arqam">
     Madrasa Portal
 </span>
 

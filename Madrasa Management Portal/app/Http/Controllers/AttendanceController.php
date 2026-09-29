@@ -22,10 +22,17 @@ class AttendanceController extends Controller
             ->latest('id')
             ->get();
 
+        $enrolledStudents = Student::where('status', 'active')
+            ->whereHas('subjects', fn ($q) => $q->where('subjects.id', $selectedSubjectId))
+            ->with(['subjects' => fn ($q) => $q->where('subjects.id', $selectedSubjectId)])
+            ->orderBy('first_name')
+            ->get();
+
         return view('attendance.index', [
             'subjects' => $subjects,
             'selectedSubjectId' => $selectedSubjectId,
             'checkedIn' => $checkedIn,
+            'enrolledStudents' => $enrolledStudents,
             'today' => $today,
         ]);
     }
