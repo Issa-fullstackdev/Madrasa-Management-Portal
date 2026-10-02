@@ -1,13 +1,14 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\SubjectController;
-use App\Http\Controllers\StudentController;
-use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProgressController;
+use App\Http\Controllers\ReportsController;
+use App\Http\Controllers\StudentController;
+use App\Http\Controllers\SubjectController;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
@@ -29,5 +30,7 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/payments', [PaymentController::class, 'index']);
         Route::post('/payments', [PaymentController::class, 'store']);
+
+        Route::get('/reports', [ReportsController::class, 'index'])->name('reports.index');
     });
 });

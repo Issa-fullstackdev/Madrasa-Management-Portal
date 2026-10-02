@@ -10,6 +10,7 @@
     @if (auth()->check() && auth()->user()->role === 'principal')
         <a class="nav-link {{ request()->is('students*') ? 'active' : '' }}" href="/students">Students</a>
         <a class="nav-link {{ request()->is('payments*') ? 'active' : '' }}" href="/payments">Payments</a>
+        <a class="nav-link {{ request()->is('reports*') ? 'active' : '' }}" href="{{ route('reports.index') }}">Reports</a>
     @endif
 </div>
 
