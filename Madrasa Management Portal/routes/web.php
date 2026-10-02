@@ -18,7 +18,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/', [DashboardController::class, 'index']);
 
-    Route::get('/subjects', [SubjectController::class, 'index']);
+    Route::get('/subjects', [SubjectController::class, 'index'])->name('subjects.index');
 
     Route::get('/attendance', [AttendanceController::class, 'index']);
     Route::post('/attendance', [AttendanceController::class, 'store'])->middleware('role:teacher');
@@ -30,6 +30,8 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/payments', [PaymentController::class, 'index']);
         Route::post('/payments', [PaymentController::class, 'store']);
+        Route::patch('/subjects/{subject}/capacity', [SubjectController::class, 'updateCapacity'])
+            ->name('subjects.capacity.update');
 
         Route::get('/reports', [ReportsController::class, 'index'])->name('reports.index');
     });
