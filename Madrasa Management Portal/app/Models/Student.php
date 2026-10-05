@@ -14,11 +14,30 @@ class Student extends Model
         'address_building', 'address_road', 'address_county',
         'emergency_contact_name', 'emergency_contact_phone',
         'guardian_signed_name', 'declaration_accepted_at',
-        'status', 'enrolled_at',
+        'status', 'monthly_fee', 'enrolled_at',
     ];
+
+    public const DEFAULT_MONTHLY_FEE = 10000;
+
+    protected $attributes = ['monthly_fee' => self::DEFAULT_MONTHLY_FEE];
+
+    protected function casts(): array
+    {
+        return ['enrolled_at' => 'date', 'monthly_fee' => 'integer'];
+    }
 
     public function subjects()
     {
         return $this->belongsToMany(Subject::class, 'student_subject')->withPivot('juz_completed');
+    }
+
+    public function feeCharges()
+    {
+        return $this->hasMany(FeeCharge::class);
+    }
+
+    public function payments()
+    {
+        return $this->hasMany(Payment::class);
     }
 }

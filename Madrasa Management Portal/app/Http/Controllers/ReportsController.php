@@ -5,12 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\Attendance;
 use App\Models\Payment;
 use App\Models\Student;
+use App\Services\FeeLedger;
+use Carbon\CarbonImmutable;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 
 class ReportsController extends Controller
 {
-    public function index(Request $request): View
+    public function index(Request $request, FeeLedger $ledger): View
     {
         $request->merge([
             'from' => $request->query('from', now()->startOfMonth()->toDateString()),
@@ -44,27 +46,22 @@ class ReportsController extends Controller
 
         $activeStudentCount = Student::where('status', 'active')->count();
 
-        $paidPayments = Payment::query()
-            ->where('month', $filters['month'])
-            ->where('status', 'paid');
+        $monthStart = CarbonImmutable::parse($filters['month'] . '-01')->startOfMonth();
+        $paymentsInMonth = Payment::query()->whereBetween('paid_at', [$monthStart, $monthStart->endOfMonth()]);
 
-        $paidPaymentCount = (clone $paidPayments)->count();
-        $collectedAmount = (clone $paidPayments)->sum('amount');
-        $pendingPaymentCount = Student::query()
-            ->where('status', 'active')
-            ->whereNotIn('id', Payment::query()
-                ->select('student_id')
-                ->where('month', $filters['month'])
-                ->where('status', 'paid'))
-            ->count();
-
-        $recentPayments = Payment::query()
+        $paymentCount = (clone $paymentsInMonth)->count();
+        $collectedAmount = (clone $paymentsInMonth)->sum('amount');
+        $recentPayments = (clone $paymentsInMonth)
             ->with('student:id,admission_number,first_name,last_name')
-            ->where('month', $filters['month'])
-            ->where('status', 'paid')
             ->latest('paid_at')
             ->limit(10)
             ->get();
+
+        $ledger->syncCharges();
+        $arrears = $ledger->accounts()
+            ->filter(fn ($account) => $account->standing() === 'arrears')
+            ->sortByDesc(fn ($account) => $account->arrears())
+            ->values();
 
         return view('reports.index', [
             'filters' => $filters,
@@ -72,10 +69,10 @@ class ReportsController extends Controller
             'enrollmentSummary' => $enrollmentSummary,
             'newEnrollmentCount' => $enrollmentSummary->sum('student_count'),
             'activeStudentCount' => $activeStudentCount,
-            'paidPaymentCount' => $paidPaymentCount,
-            'pendingPaymentCount' => $pendingPaymentCount,
+            'paymentCount' => $paymentCount,
             'collectedAmount' => $collectedAmount,
             'recentPayments' => $recentPayments,
+            'arrears' => $arrears,
         ]);
     }
 }

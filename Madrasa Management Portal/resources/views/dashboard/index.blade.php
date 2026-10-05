@@ -36,14 +36,14 @@
                 </div>
             </div>
         </div>
-        @if ($paymentsThisMonth)
+        @if ($feeStanding)
             <div class="col-12 col-sm-6 col-lg-3">
                 <div class="card h-100">
                     <div class="card-body kpi-card">
                         <div class="kpi-icon" style="background: var(--mosque-blue-dark);">&#128176;</div>
                         <div>
-                            <div class="kpi-value">{{ $paymentsThisMonth['paid'] }} / {{ $paymentsThisMonth['pending'] }}</div>
-                            <div class="kpi-label">Fees Paid / Pending (this month)</div>
+                            <div class="kpi-value">{{ $feeStanding['upToDate'] }} / {{ $feeStanding['inArrears'] }}</div>
+                            <div class="kpi-label"><a href="/payments?filter=arrears">Fees up to date / In arrears</a></div>
                         </div>
                     </div>
                 </div>

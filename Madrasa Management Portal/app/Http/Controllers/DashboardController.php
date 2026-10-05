@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Attendance;
-use App\Models\Payment;
 use App\Models\Student;
+use App\Services\FeeLedger;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request, FeeLedger $ledger)
     {
         $totalStudents = Student::where('status', 'active')->count();
 
@@ -31,13 +31,13 @@ class DashboardController extends Controller
             ->orderBy('first_name')
             ->get();
 
-        $paymentsThisMonth = null;
+        $feeStanding = null;
         if ($request->user()->role === 'principal') {
-            $month = now()->format('Y-m');
-            $paidCount = Payment::where('month', $month)->where('status', 'paid')->count();
-            $paymentsThisMonth = [
-                'paid' => $paidCount,
-                'pending' => max($totalStudents - $paidCount, 0),
+            $ledger->syncCharges();
+            $inArrears = $ledger->accounts()->filter(fn ($account) => $account->standing() === 'arrears')->count();
+            $feeStanding = [
+                'inArrears' => $inArrears,
+                'upToDate' => $totalStudents - $inArrears,
             ];
         }
 
@@ -47,7 +47,7 @@ class DashboardController extends Controller
             'absentToday' => $absentToday,
             'trend' => $trend,
             'recentActivity' => $recentActivity,
-            'paymentsThisMonth' => $paymentsThisMonth,
+            'feeStanding' => $feeStanding,
             'studentProgress' => $studentProgress,
         ]);
     }

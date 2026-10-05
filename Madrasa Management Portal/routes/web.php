@@ -28,8 +28,14 @@ Route::middleware('auth')->group(function () {
         Route::get('/students', [StudentController::class, 'index']);
         Route::post('/students', [StudentController::class, 'store']);
 
-        Route::get('/payments', [PaymentController::class, 'index']);
-        Route::post('/payments', [PaymentController::class, 'store']);
+        Route::get('/payments', [PaymentController::class, 'index'])->name('payments.index');
+        Route::post('/payments', [PaymentController::class, 'store'])->name('payments.store');
+        Route::post('/payments/reconcile', [PaymentController::class, 'reconcile'])->name('payments.reconcile');
+        Route::post('/payments/non-billable-months', [PaymentController::class, 'storeNonBillableMonth'])->name('payments.non-billable.store');
+        Route::delete('/payments/non-billable-months/{nonBillableMonth}', [PaymentController::class, 'destroyNonBillableMonth'])->name('payments.non-billable.destroy');
+        Route::get('/payments/students/{student}', [PaymentController::class, 'show'])->name('payments.show');
+        Route::patch('/payments/students/{student}/fee', [PaymentController::class, 'updateFee'])->name('payments.fee.update');
+        Route::delete('/payments/{payment}', [PaymentController::class, 'destroy'])->name('payments.destroy');
         Route::patch('/subjects/{subject}/capacity', [SubjectController::class, 'updateCapacity'])
             ->name('subjects.capacity.update');
 

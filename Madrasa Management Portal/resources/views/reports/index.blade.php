@@ -15,7 +15,7 @@
             <input class="form-control" id="to" name="to" type="date" value="{{ $filters['to'] }}" required>
         </div>
         <div class="col-12 col-sm-6 col-lg-3">
-            <label class="form-label" for="month">Fee month</label>
+            <label class="form-label" for="month">Fees received in</label>
             <input class="form-control" id="month" name="month" type="month" value="{{ $filters['month'] }}" required>
         </div>
         <div class="col-12 col-sm-6 col-lg-3">
@@ -80,11 +80,12 @@
     </section>
 
     <section aria-labelledby="fees-heading">
-        <h4 id="fees-heading" class="mb-3">Fee payments for {{ \Carbon\Carbon::createFromFormat('Y-m', $filters['month'])->format('F Y') }}</h4>
+        <h4 id="fees-heading" class="mb-3">Fees collected in {{ \Carbon\Carbon::parse($filters['month'] . '-01')->format('F Y') }}</h4>
         <div class="row g-3 mb-3">
-            <div class="col-12 col-sm-4"><div class="card h-100"><div class="card-body"><div class="kpi-value">{{ $paidPaymentCount }}</div><div class="kpi-label">Fees paid</div></div></div></div>
-            <div class="col-12 col-sm-4"><div class="card h-100"><div class="card-body"><div class="kpi-value">{{ $pendingPaymentCount }}</div><div class="kpi-label">Students without a paid fee record</div></div></div></div>
-            <div class="col-12 col-sm-4"><div class="card h-100"><div class="card-body"><div class="kpi-value">{{ number_format($collectedAmount) }}</div><div class="kpi-label">Amount recorded as received</div></div></div></div>
+            <div class="col-12 col-sm-6 col-lg-3"><div class="card h-100"><div class="card-body"><div class="kpi-value">{{ $paymentCount }}</div><div class="kpi-label">Payments received</div></div></div></div>
+            <div class="col-12 col-sm-6 col-lg-3"><div class="card h-100"><div class="card-body"><div class="kpi-value">{{ number_format($collectedAmount) }}</div><div class="kpi-label">Amount received (KES)</div></div></div></div>
+            <div class="col-12 col-sm-6 col-lg-3"><div class="card h-100"><div class="card-body"><div class="kpi-value">{{ $arrears->count() }}</div><div class="kpi-label">Students in arrears (today)</div></div></div></div>
+            <div class="col-12 col-sm-6 col-lg-3"><div class="card h-100"><div class="card-body"><div class="kpi-value">{{ number_format($arrears->sum(fn ($a) => $a->arrears())) }}</div><div class="kpi-label">Total outstanding (KES)</div></div></div></div>
         </div>
         <div class="table-responsive">
             <table class="table table-bordered bg-white mb-0">
@@ -98,12 +99,31 @@
                             <td>{{ $payment->paid_at?->format('d M Y') ?? '-' }}</td>
                         </tr>
                     @empty
-                        <tr><td colspan="4" class="text-muted text-center">No paid fees recorded for this month.</td></tr>
+                        <tr><td colspan="4" class="text-muted text-center">No payments received in this month.</td></tr>
                     @endforelse
                 </tbody>
             </table>
         </div>
-        <p class="text-muted small mt-2 mb-0">Showing the 10 most recent paid records. Amounts use the same unit as the payment register.</p>
+        <p class="text-muted small mt-2 mb-4">Showing the 10 most recent payments received in the selected month.</p>
+
+        <h5 class="mb-3">Arrears (active students)</h5>
+        <div class="table-responsive">
+            <table class="table table-bordered bg-white mb-0">
+                <thead class="table-dark"><tr><th scope="col">Admission no.</th><th scope="col">Student</th><th scope="col">Months owing</th><th scope="col">Amount owing (KES)</th></tr></thead>
+                <tbody>
+                    @forelse ($arrears as $account)
+                        <tr>
+                            <td>{{ $account->student->admission_number }}</td>
+                            <td>{{ $account->student->first_name }} {{ $account->student->last_name }}</td>
+                            <td>{{ $account->arrearsMonths }}</td>
+                            <td>{{ number_format($account->arrears()) }}</td>
+                        </tr>
+                    @empty
+                        <tr><td colspan="4" class="text-muted text-center">No students are in arrears.</td></tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
     </section>
 
     <style>

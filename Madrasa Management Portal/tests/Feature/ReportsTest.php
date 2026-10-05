@@ -16,6 +16,7 @@ class ReportsTest extends TestCase
 
     public function test_principal_can_view_reports(): void
     {
+        $this->travelTo('2026-09-20 12:00:00');
         $principal = User::factory()->create(['role' => 'principal']);
         $subject = Subject::create(['name' => 'Quran']);
         $firstStudent = $this->createStudent('001', 'Amina', 'Noor', '2026-09-03');
@@ -36,16 +37,15 @@ class ReportsTest extends TestCase
         ]);
         Payment::create([
             'student_id' => $firstStudent->id,
-            'month' => '2026-09',
             'amount' => 2500,
-            'status' => 'paid',
+            'method' => 'mpesa',
+            'mpesa_code' => 'SJK4H7XQ2P',
             'paid_at' => '2026-09-11 10:00:00',
         ]);
         Payment::create([
             'student_id' => $inactiveStudent->id,
-            'month' => '2026-09',
             'amount' => 500,
-            'status' => 'paid',
+            'method' => 'cash',
             'paid_at' => '2026-09-12 10:00:00',
         ]);
 
@@ -54,16 +54,17 @@ class ReportsTest extends TestCase
             ->assertSee('Attendance report')
             ->assertSee('Active students')
             ->assertSee('New enrollments in selected dates')
-            ->assertSee('Fees paid')
-            ->assertSee('Students without a paid fee record')
+            ->assertSee('Payments received')
+            ->assertSee('Students in arrears (today)')
+            ->assertSee('Idris Ali')
+            ->assertSee('17,500')
             ->assertSee('3,000')
             ->assertSee('Amina Noor')
             ->assertSee('Maryam Amin')
             ->assertSee('Quran')
             ->assertSee('<div class="kpi-value">2</div>', false)
             ->assertSee('<div class="kpi-value">3</div>', false)
-            ->assertSee('<div class="kpi-value">2</div>', false)
-            ->assertSee('<div class="kpi-value">1</div>', false);
+            ->assertSee('<div class="kpi-value">2</div>', false);
     }
 
     public function test_teacher_cannot_view_principal_reports(): void

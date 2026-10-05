@@ -6,15 +6,30 @@ use Illuminate\Database\Eloquent\Model;
 
 class Payment extends Model
 {
-    protected $fillable = ['student_id', 'amount', 'month', 'paybill_reference', 'status', 'paid_at'];
+    public const METHODS = ['mpesa' => 'M-Pesa', 'cash' => 'Cash'];
+
+    protected $fillable = [
+        'student_id', 'amount', 'method', 'mpesa_code', 'paid_at',
+        'verification_status', 'verified_at', 'notes', 'recorded_by',
+    ];
 
     protected function casts(): array
     {
-        return ['paid_at' => 'datetime'];
+        return ['paid_at' => 'datetime', 'verified_at' => 'datetime'];
     }
 
     public function student()
     {
         return $this->belongsTo(Student::class);
+    }
+
+    public function recorder()
+    {
+        return $this->belongsTo(User::class, 'recorded_by');
+    }
+
+    public function isVerified(): bool
+    {
+        return $this->verification_status === 'verified';
     }
 }
